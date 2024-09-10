@@ -16,7 +16,7 @@ st.markdown("Welcome to this simple web application that classifies mosquitoes. 
 # Cache the model loading to optimize performance
 @st.cache_resource
 
-model_url = 'https://drive.google.com/uc?export=download&id=1NbxywH92PygxyGwFzCEMFX4469PC1Rah'
+model_url = "https://drive.google.com/uc?export=download&id=1NbxywH92PygxyGwFzCEMFX4469PC1Rah"
 urllib.request.urlretrieve(model_url, 'model_classifier.h5')
 
 def load_classification_model():
