@@ -1,0 +1,5 @@
+pathlib
+pillow
+ultralytics
+opencv-python
+yt_dlp
