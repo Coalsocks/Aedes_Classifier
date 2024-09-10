@@ -6,6 +6,7 @@ import tensorflow as tf
 import numpy as np
 from tensorflow.keras.models import load_model
 from tensorflow.keras import preprocessing
+import urllib.request
 import time
 
 st.title('Aedes Classifier')
@@ -14,6 +15,10 @@ st.markdown("Welcome to this simple web application that classifies mosquitoes. 
 
 # Cache the model loading to optimize performance
 @st.cache_resource
+
+model_url = 'https://drive.google.com/uc?export=download&id=1NbxywH92PygxyGwFzCEMFX4469PC1Rah'
+urllib.request.urlretrieve(model_url, 'model_classifier.h5')
+
 def load_classification_model():
     classifier_model = "model_classifier.h5"
     model = load_model(classifier_model, compile=False, custom_objects={'KerasLayer': hub.KerasLayer})
@@ -58,3 +63,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+https://drive.google.com/file/d/1NbxywH92PygxyGwFzCEMFX4469PC1Rah/view?usp=drive_link
