@@ -63,5 +63,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-https://drive.google.com/file/d/1NbxywH92PygxyGwFzCEMFX4469PC1Rah/view?usp=drive_link
