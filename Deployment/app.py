@@ -14,7 +14,7 @@ st.title('Mosquito Classifier')
 st.sidebar.title('Class Descriptions')
 
 st.sidebar.subheader('Aedes')
-st.sidebar.image("https://commons.wikimedia.org/wiki/Category:Aedes_aegypti#/media/File:Aedes_aegypti_CDC-Gathany.jpg", caption='Aedes', use_column_width=True)
+st.sidebar.image("https://upload.wikimedia.org/wikipedia/commons/2/2c/Aedes_aegypti_CDC-Gathany.jpg", caption='Aedes', use_column_width=True)
 st.sidebar.markdown("""
 Characterized by black and white stripes on their legs and a lyre-shaped pattern of white scales on the thorax.
 """)
@@ -26,7 +26,7 @@ Identified by their spotted wings and their characteristic resting position with
 """)
 
 st.sidebar.subheader('Culex')
-st.sidebar.image("https://species.wikimedia.org/wiki/Culex_%28Culex%29#/media/File:Culex_pipiens_04.JPG", caption='Culex', use_column_width=True)
+st.sidebar.image("https://upload.wikimedia.org/wikipedia/commons/3/36/Culex_pipiens_04.JPG", caption='Culex', use_column_width=True)
 st.sidebar.markdown("""
 Recognized by their uniform brown color, blunt abdomen, and lack of distinct markings on the body.
 """)
