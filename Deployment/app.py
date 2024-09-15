@@ -8,7 +8,7 @@ from tensorflow.keras import preprocessing
 import gdown
 import time
 
-st.title('MozziMatch')
+st.markdown("<h1 style='text-align: center;'>Mozzi<span style='color:red;'>Match</span></h1>", unsafe_allow_html=True)
 
 # Class Descriptions in Sidebar with Embedded Images
 st.sidebar.title('Class Descriptions')
