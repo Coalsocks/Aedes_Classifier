@@ -1,6 +1,5 @@
 import streamlit as st
 from PIL import Image
-import matplotlib.pyplot as plt
 import tensorflow_hub as hub
 import tensorflow as tf
 import numpy as np
@@ -24,10 +23,9 @@ st.sidebar.markdown("""
 # Class Descriptions
 st.sidebar.title('Class Descriptions')
 st.sidebar.markdown("""
-- **Aedes**: Known for spreading diseases like dengue, Zika, and chikungunya. They have white markings on their legs and a pattern of white scales on their thorax.
-- **Anopheles**: Primary vectors for malaria. They are recognized by their spotted wings and resting position at a 45-degree angle.
-- **Culex**: Common in both urban and rural areas, and are vectors for West Nile virus. They have a blunt abdomen and uniform color.
-- **Other**: Any other mosquito species not included in the above categories or other insects that resemble mosquitoes.
+- **Aedes**: Characterized by black and white stripes on their legs and a lyre-shaped pattern of white scales on the thorax.
+- **Anopheles**: Identified by their spotted wings and their characteristic resting position with their abdomen sticking up at an angle.
+- **Culex**: Recognized by their uniform brown color, blunt abdomen, and lack of distinct markings on the body.
 """)
 
 # Cache the model loading to optimize performance
@@ -63,7 +61,7 @@ def predict(image, model):
     confidence = (100 * np.max(scores)).round(2)
     
     result = f"{predicted_class} with a {confidence}% confidence."
-    return result, scores, class_names
+    return result
 
 # Image Quality Check
 def image_quality_check(image):
@@ -98,20 +96,9 @@ def main():
             results = []
             with st.spinner('Model working....'):
                 for i, image in enumerate(images):
-                    fig, ax = plt.subplots()
-                    ax.imshow(image)
-                    ax.axis("off")
-                    
                     # Get classification result
-                    classification_result, scores, class_names = predict(image, model)
+                    classification_result = predict(image, model)
                     results.append(classification_result)
-                    
-                    # Display all confidence scores as a bar chart
-                    fig, ax_bar = plt.subplots()
-                    ax_bar.barh(class_names, scores, color='blue')
-                    ax_bar.set_xlim(0, 1)
-                    ax_bar.set_title(f'Confidence Scores for Image {i+1}')
-                    st.pyplot(fig)
 
                 for i, result in enumerate(results):
                     st.write(f"Result for Image {i+1}: {result}")
@@ -128,3 +115,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
