@@ -10,17 +10,25 @@ import time
 
 st.title('Mosquito Classifier')
 
-# Class Descriptions in Sidebar with Links to Images
+# Class Descriptions in Sidebar with Embedded Images
 st.sidebar.title('Class Descriptions')
+
+st.sidebar.subheader('Aedes')
+st.sidebar.image("https://upload.wikimedia.org/wikipedia/commons/7/7a/Aedes_aegypti_dorsal_view.jpg", caption='Aedes aegypti', use_column_width=True)
 st.sidebar.markdown("""
-- **Aedes**: Characterized by black and white stripes on their legs and a lyre-shaped pattern of white scales on the thorax.  
-  [View Image](https://upload.wikimedia.org/wikipedia/commons/7/7a/Aedes_aegypti_dorsal_view.jpg)
-  
-- **Anopheles**: Identified by their spotted wings and their characteristic resting position with their abdomen sticking up at an angle.  
-  [View Image](https://upload.wikimedia.org/wikipedia/commons/0/0d/Anopheles_gambiae.jpg)
-  
-- **Culex**: Recognized by their uniform brown color, blunt abdomen, and lack of distinct markings on the body.  
-  [View Image](https://upload.wikimedia.org/wikipedia/commons/e/e3/CulexQuinquefasciatus.jpg)
+Characterized by black and white stripes on their legs and a lyre-shaped pattern of white scales on the thorax.
+""")
+
+st.sidebar.subheader('Anopheles')
+st.sidebar.image("https://upload.wikimedia.org/wikipedia/commons/0/0d/Anopheles_gambiae.jpg", caption='Anopheles gambiae', use_column_width=True)
+st.sidebar.markdown("""
+Identified by their spotted wings and their characteristic resting position with their abdomen sticking up at an angle.
+""")
+
+st.sidebar.subheader('Culex')
+st.sidebar.image("https://upload.wikimedia.org/wikipedia/commons/e/e3/CulexQuinquefasciatus.jpg", caption='Culex quinquefasciatus', use_column_width=True)
+st.sidebar.markdown("""
+Recognized by their uniform brown color, blunt abdomen, and lack of distinct markings on the body.
 """)
 
 # Cache the model loading to optimize performance
