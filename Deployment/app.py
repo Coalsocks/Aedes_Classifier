@@ -31,8 +31,8 @@ st.sidebar.markdown("""
 # Cache the model loading to optimize performance
 @st.cache_resource
 def download_and_load_model():
-    url = 'https://drive.google.com/uc?id=1NbxywH92PygxyGwFzCEMFX4469PC1Rah'  # Replace with your file ID
-    output = 'model_classifier.h5'
+    url = 'https://drive.google.com/uc?id=1R4Za-Kz7nyP5GY8N4oz00HLY7YVzucj0'  # Replace with your file ID
+    output = 'vgg16_model.h5'
 
     st.write("Downloading the model...")
     gdown.download(url, output, quiet=False)
