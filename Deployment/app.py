@@ -17,7 +17,7 @@ st.markdown("Welcome to this simple web application that classifies mosquitoes. 
 @st.cache_resource
 def download_and_load_model():
     url = 'https://drive.google.com/uc?id=1NbxywH92PygxyGwFzCEMFX4469PC1Rah'  # Replace with your file ID
-    output = 'model_classifier.h5'
+    output = 'vgg16_model.h5'
 
     st.write("Downloading the model...")
     gdown.download(url, output, quiet=False)
@@ -41,8 +41,17 @@ def predict(image, model):
     scores = tf.nn.softmax(predictions[0])
     scores = scores.numpy()
     
-    result = f"{class_names[np.argmax(scores)]} with a { (100 * np.max(scores)).round(2) } % confidence."
-    return result
+    # Aedes detection logic
+    aedes_confidence = scores[0]  # Assuming 'Aedes' is the first class
+    aedes_threshold = 0.5  # Define a threshold for detection
+
+    if aedes_confidence > aedes_threshold:
+        aedes_detection = f"Aedes mosquito detected with a confidence of {aedes_confidence * 100:.2f}%."
+    else:
+        aedes_detection = f"No Aedes mosquito detected (confidence: {aedes_confidence * 100:.2f}%)."
+
+    classification_result = f"{class_names[np.argmax(scores)]} with a { (100 * np.max(scores)).round(2) } % confidence."
+    return aedes_detection, classification_result
 
 def main():
     model = download_and_load_model()  # Ensure the model is loaded when the app starts
@@ -62,10 +71,12 @@ def main():
                 fig = plt.figure()
                 plt.imshow(image)
                 plt.axis("off")
-                predictions = predict(image, model)  # Pass the model to the predict function
+                # Get both detection and classification results
+                aedes_detection, classification_result = predict(image, model)
                 time.sleep(1)
-                st.success('Classified')
-                st.write(predictions)
+                st.success('Classification Complete')
+                st.write(aedes_detection)  # Display Aedes detection result
+                st.write(classification_result)  # Display full classification result
                 st.pyplot(fig)
 
 if __name__ == "__main__":
