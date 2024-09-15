@@ -8,19 +8,9 @@ from tensorflow.keras import preprocessing
 import gdown
 import time
 
-st.title('MozziMatch')
+st.title('Mosquito Classifier')
 
-# User Guide
-st.sidebar.title('User Guide')
-st.sidebar.markdown("""
-1. **Upload Image**: Upload a mosquito image in PNG, JPG, or JPEG format.
-2. **Image Quality**: Make sure the image is clear and shows a single mosquito for best results.
-3. **Classification**: The model will classify the image into one of four categories: Aedes, Anopheles, Culex, or Other.
-4. **Batch Classification**: You can upload multiple images at once to classify them in one go.
-5. **Feedback**: Provide feedback on the classification to help improve future versions of the model.
-""")
-
-# Class Descriptions
+# Class Descriptions in Sidebar
 st.sidebar.title('Class Descriptions')
 st.sidebar.markdown("""
 - **Aedes**: Characterized by black and white stripes on their legs and a lyre-shaped pattern of white scales on the thorax.
@@ -31,16 +21,21 @@ st.sidebar.markdown("""
 # Cache the model loading to optimize performance
 @st.cache_resource
 def download_and_load_model():
-    url = 'https://drive.google.com/uc?id=1R4Za-Kz7nyP5GY8N4oz00HLY7YVzucj0'  # Replace with your file ID
-    output = 'vgg16_model.h5'
+    url = 'https://drive.google.com/uc?id=1NbxywH92PygxyGwFzCEMFX4469PC1Rah'  # Replace with your file ID
+    output = 'model_classifier.h5'
 
-    st.write("Downloading the model...")
-    gdown.download(url, output, quiet=False)
+    try:
+        st.write("Downloading the model...")
+        gdown.download(url, output, quiet=False)
+        
+        st.write("Loading the model...")
+        model = load_model(output, compile=False, custom_objects={'KerasLayer': hub.KerasLayer})
+        
+        st.success("Model loaded successfully!")
+    except Exception as e:
+        st.error(f"An error occurred while downloading or loading the model: {str(e)}")
+        return None
 
-    st.write("Loading the model...")
-    model = load_model(output, compile=False, custom_objects={'KerasLayer': hub.KerasLayer})
-
-    st.success("Model loaded successfully!")
     return model
 
 # Prediction function
@@ -73,6 +68,16 @@ def image_quality_check(image):
 def main():
     model = download_and_load_model()  # Ensure the model is loaded when the app starts
 
+    # User Guide in Main Body
+    st.header('User Guide')
+    st.markdown("""
+    1. **Upload Image**: Upload a mosquito image in PNG, JPG, or JPEG format.
+    2. **Image Quality**: Make sure the image is clear and shows a single mosquito for best results.
+    3. **Classification**: The model will classify the image into one of four categories: Aedes, Anopheles, Culex, or Other.
+    4. **Batch Classification**: You can upload multiple images at once to classify them in one go.
+    5. **Feedback**: Provide feedback on the classification to help improve future versions of the model.
+    """)
+
     # User uploads one or multiple images
     file_uploaded = st.file_uploader("Choose File(s)", type=["png", "jpg", "jpeg"], accept_multiple_files=True)
     class_btn = st.button("Classify")
@@ -102,17 +107,6 @@ def main():
 
                 for i, result in enumerate(results):
                     st.write(f"Result for Image {i+1}: {result}")
-            
-            # User Feedback Mechanism
-            st.subheader('Provide Feedback')
-            feedback = st.text_area('Was the classification accurate? Any comments or suggestions?')
-            if st.button('Submit Feedback'):
-                if feedback:
-                    st.write("Thank you for your feedback!")
-                    # Here you could add code to save the feedback to a file or database
-                else:
-                    st.warning("Please enter some feedback before submitting.")
 
 if __name__ == "__main__":
     main()
-
