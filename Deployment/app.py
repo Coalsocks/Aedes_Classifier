@@ -8,7 +8,7 @@ from tensorflow.keras import preprocessing
 import gdown
 import time
 
-st.title('Mosquito Classifier')
+st.title('MozziMatch')
 
 # Class Descriptions in Sidebar
 st.sidebar.title('Class Descriptions')
