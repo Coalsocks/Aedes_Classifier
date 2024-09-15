@@ -9,15 +9,15 @@ from tensorflow.keras import preprocessing
 import gdown
 import time
 
-st.title('Aedes Classifier')
+st.title('MozziMatch')
 
-st.markdown("Welcome to this simple web application that classifies mosquitoes. The classes include: Aedes and Non-Aedes.")
+st.markdown("This web application classifies mosquitoes into four categories: Aedes, Anopheles, Culex, or Other.")
 
 # Cache the model loading to optimize performance
 @st.cache_resource
 def download_and_load_model():
     url = 'https://drive.google.com/uc?id=1NbxywH92PygxyGwFzCEMFX4469PC1Rah'  # Replace with your file ID
-    output = 'vgg16_model.h5'
+    output = 'model_classifier.h5'
 
     st.write("Downloading the model...")
     gdown.download(url, output, quiet=False)
@@ -35,23 +35,18 @@ def predict(image, model):
     test_image = preprocessing.image.img_to_array(test_image)
     test_image = test_image / 255.0
     test_image = np.expand_dims(test_image, axis=0)
-    class_names = ['Aedes', 'Non-Aedes']
+    class_names = ['Aedes', 'Anopheles', 'Culex', 'Other']
     
     predictions = model.predict(test_image)
     scores = tf.nn.softmax(predictions[0])
     scores = scores.numpy()
     
-    # Aedes detection logic
-    aedes_confidence = scores[0]  # Assuming 'Aedes' is the first class
-    aedes_threshold = 0.5  # Define a threshold for detection
-
-    if aedes_confidence > aedes_threshold:
-        aedes_detection = f"Aedes mosquito detected with a confidence of {aedes_confidence * 100:.2f}%."
-    else:
-        aedes_detection = f"No Aedes mosquito detected (confidence: {aedes_confidence * 100:.2f}%)."
-
-    classification_result = f"{class_names[np.argmax(scores)]} with a { (100 * np.max(scores)).round(2) } % confidence."
-    return aedes_detection, classification_result
+    # Get the predicted class and its confidence
+    predicted_class = class_names[np.argmax(scores)]
+    confidence = (100 * np.max(scores)).round(2)
+    
+    result = f"{predicted_class} with a {confidence}% confidence."
+    return result
 
 def main():
     model = download_and_load_model()  # Ensure the model is loaded when the app starts
@@ -71,12 +66,11 @@ def main():
                 fig = plt.figure()
                 plt.imshow(image)
                 plt.axis("off")
-                # Get both detection and classification results
-                aedes_detection, classification_result = predict(image, model)
+                # Get classification result
+                classification_result = predict(image, model)
                 time.sleep(1)
                 st.success('Classification Complete')
-                st.write(aedes_detection)  # Display Aedes detection result
-                st.write(classification_result)  # Display full classification result
+                st.write(classification_result)  # Display classification result
                 st.pyplot(fig)
 
 if __name__ == "__main__":
