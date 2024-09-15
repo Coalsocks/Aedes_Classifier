@@ -79,8 +79,8 @@ def main():
     file_uploaded = st.file_uploader("Choose File(s)", type=["png", "jpg", "jpeg"], accept_multiple_files=True)
     class_btn = st.button("Classify")
 
+    images = []
     if file_uploaded is not None:
-        images = []
         for uploaded_file in file_uploaded:
             image = Image.open(uploaded_file)
             if image_quality_check(image):
@@ -107,7 +107,7 @@ def main():
                     results.append(classification_result)
                     
                     # Display all confidence scores as a bar chart
-                    ax_bar = fig.add_axes([0.2, -0.1, 0.6, 0.1])
+                    fig, ax_bar = plt.subplots()
                     ax_bar.barh(class_names, scores, color='blue')
                     ax_bar.set_xlim(0, 1)
                     ax_bar.set_title(f'Confidence Scores for Image {i+1}')
