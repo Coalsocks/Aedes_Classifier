@@ -8,14 +8,19 @@ from tensorflow.keras import preprocessing
 import gdown
 import time
 
-st.title('MozziMatch')
+st.title('Mosquito Classifier')
 
-# Class Descriptions in Sidebar
+# Class Descriptions in Sidebar with Links to Images
 st.sidebar.title('Class Descriptions')
 st.sidebar.markdown("""
-- **Aedes**: Characterized by black and white stripes on their legs and a lyre-shaped pattern of white scales on the thorax.
-- **Anopheles**: Identified by their spotted wings and their characteristic resting position with their abdomen sticking up at an angle.
-- **Culex**: Recognized by their uniform brown color, blunt abdomen, and lack of distinct markings on the body.
+- **Aedes**: Characterized by black and white stripes on their legs and a lyre-shaped pattern of white scales on the thorax.  
+  [View Image](https://upload.wikimedia.org/wikipedia/commons/7/7a/Aedes_aegypti_dorsal_view.jpg)
+  
+- **Anopheles**: Identified by their spotted wings and their characteristic resting position with their abdomen sticking up at an angle.  
+  [View Image](https://upload.wikimedia.org/wikipedia/commons/0/0d/Anopheles_gambiae.jpg)
+  
+- **Culex**: Recognized by their uniform brown color, blunt abdomen, and lack of distinct markings on the body.  
+  [View Image](https://upload.wikimedia.org/wikipedia/commons/e/e3/CulexQuinquefasciatus.jpg)
 """)
 
 # Cache the model loading to optimize performance
@@ -107,6 +112,16 @@ def main():
 
                 for i, result in enumerate(results):
                     st.write(f"Result for Image {i+1}: {result}")
+            
+            # User Feedback Mechanism
+            st.subheader('Provide Feedback')
+            feedback = st.text_area('Was the classification accurate? Any comments or suggestions?')
+            if st.button('Submit Feedback'):
+                if feedback:
+                    st.write("Thank you for your feedback!")
+                    # Here you could add code to save the feedback to a file or database
+                else:
+                    st.warning("Please enter some feedback before submitting.")
 
 if __name__ == "__main__":
     main()
