@@ -6,7 +6,6 @@ import numpy as np
 from tensorflow.keras.models import load_model
 from tensorflow.keras import preprocessing
 import gdown
-import time
 
 st.markdown("<h1 style='text-align: center; font-size: 120px;'>Mozzi<span style='color:red;'>Match</span></h1>", unsafe_allow_html=True)
 
@@ -105,7 +104,7 @@ def main():
                 st.warning(f"Image {uploaded_file.name} is too small, please upload a higher resolution image.")
     
         if images:
-            st.image(images, caption=[f'Uploaded Image {i+1}' for i in range(len(images))], use_column_width=True)
+            st.image(images, caption=[f'Uploaded Image {i+1}' for i in range(len(images))], width=300)  # Set width to 300 pixels
     
     if class_btn:
         if not images:
