@@ -63,11 +63,10 @@ def predict(image, model):
     scores = tf.nn.softmax(predictions[0])
     scores = scores.numpy()
     
-    # Get the predicted class and its confidence
+    # Get the predicted class
     predicted_class = class_names[np.argmax(scores)]
-    confidence = (100 * np.max(scores)).round(2)
     
-    result = f"{predicted_class} with a confidence level of {confidence}%."
+    result = f"{predicted_class}."
     return result
 
 # Image Quality Check
