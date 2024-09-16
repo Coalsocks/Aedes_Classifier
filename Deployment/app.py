@@ -67,7 +67,7 @@ def predict(image, model):
     predicted_class = class_names[np.argmax(scores)]
     confidence = (100 * np.max(scores)).round(2)
     
-    result = f"{predicted_class}."
+    result = f"{predicted_class} with a confidence level of {confidence}%."
     return result
 
 # Image Quality Check
